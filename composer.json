@@ -1,0 +1,22 @@
+{
+    "name": "irfa/lockout",
+    "description": "\"Lock account if failed login\"",
+    "type": "package",
+    "license": "MIT",
+    "version": "v1.32",
+    "keywords": ["laravel", "lockout", "account", "login lock", "account locked"],
+    "authors": [
+        {
+            "name": "Irfa A",
+            "email": "irfa.backend@protonmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+            "psr-4": {
+                "Irfa\\Lockout\\": "src/"
+            }
+    }
+}
