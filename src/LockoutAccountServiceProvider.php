@@ -4,6 +4,7 @@ namespace Irfa\Lockout;
 
 use Illuminate\Support\ServiceProvider;
 use Irfa\Lockout\Listeners\LockoutAccount;
+use Irfa\Lockout\Listeners\LoginLock;
 
 class LockoutAccountServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class LockoutAccountServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Event::listen(
            \Illuminate\Auth\Events\Failed::class,
             LockoutAccount::class
+        );
+        \Illuminate\Support\Facades\Event::listen(
+           \Illuminate\Auth\Events\Attempting::class,
+            LoginLock::class
         );
     }
 

@@ -31,9 +31,17 @@ return [
     | File path
     |--------------------------------------------------------------------------
     | For file lockout driver only
+    | default storage_path('lockout/account/locked/')
+    */
+
+    'lockout_file_path' => storage_path('lockout/account/locked/'),
+    /*
+    |--------------------------------------------------------------------------
+    | Redirect Url
+    |--------------------------------------------------------------------------
+    | For file lockout driver only
     | default storage_path('lockout/')
     */
 
-    'lockout_file_path' => storage_path('lockout/'),
-
+    'redirect_url' => url("/login"),
 ];
