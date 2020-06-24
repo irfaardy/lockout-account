@@ -100,8 +100,8 @@ use Request;
 
 class UserManage {
 	public function account_unlock(Request $request){
-        Lockout::showAttemps($request->email);
-        return redirect()->back();
+        $lockout = Lockout::showAttemps($request->email);
+        return $lockout;
     }
 }
 ```
