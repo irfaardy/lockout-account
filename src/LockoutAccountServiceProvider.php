@@ -5,6 +5,7 @@ namespace Irfa\Lockout;
 use Illuminate\Support\ServiceProvider;
 use Irfa\Lockout\Listeners\LockoutAccount;
 use Irfa\Lockout\Listeners\LoginLock;
+use Irfa\Lockout\Listeners\CleanLockoutAccount;
 
 class LockoutAccountServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,7 @@ class LockoutAccountServiceProvider extends ServiceProvider
        'Irfa\Lockout\Console\Commands\UnlockCommands',
        'Irfa\Lockout\Console\Commands\AttempsCommands',
        'Irfa\Lockout\Console\Commands\LockInfoPackage',
+       'Irfa\Lockout\Console\Commands\ClearLockCommands',
     ];
 
     public function register()
@@ -27,6 +29,10 @@ class LockoutAccountServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Event::listen(
            \Illuminate\Auth\Events\Failed::class,
             LockoutAccount::class
+        );
+        \Illuminate\Support\Facades\Event::listen(
+           \Illuminate\Auth\Events\Authenticated::class,
+            CleanLockoutAccount::class
         );
         $router->pushMiddlewareToGroup('web',\Irfa\Lockout\Middleware\LockAccount::class);
 

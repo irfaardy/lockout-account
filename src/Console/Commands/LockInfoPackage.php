@@ -50,10 +50,11 @@ class LockInfoPackage extends Command
 
     $this->line('-------------------------------------------------------------------------------');
     $this->line('Laravel Account Lockout');
-    $this->line('Version 1.2.0 (2020)');
+    $this->line('Version 1.0.0 (2020)');
     $this->line('<fg=cyan>https://github.com/irfaardy/lockout-account');
     $conf = config('irfa.lockout');
-     $this->line('-------------------------------------------------------------------------------');
+     $this->line('<fg=default>-------------------------------------------------------------------------------');
+     $this->line('<fg=yellow>Configuration');
     foreach($conf as $key => $val){
         if(is_array($val)){
             foreach($val as $v){
