@@ -13,7 +13,7 @@ class UnlockCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'account:unlock {username}';
+    protected $signature = 'lockout:unlock {username}';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class UnlockCommands extends Command
               $ip = $read_enc->ip;
               $table->setRows([
                         ['<fg=cyan>Login attemps',  $attemps],
-                        ['<fg=cyan>Last login attemps',date("Y-m-d H:i:s", $time)],
+                        ['<fg=cyan>Last login attemps',$time],
                         ['<fg=cyan>Last IP Address',empty(end($ip))? "unknown":end($ip)],
                         ['<fg=cyan>Unlocked at',date('Y-m-d H:i:s', time())],
                     ]);

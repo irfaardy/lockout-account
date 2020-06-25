@@ -13,7 +13,7 @@ class LockCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'account:lock {username}';
+    protected $signature = 'lockout:lock {username}';
 
     /**
      * The console command description.

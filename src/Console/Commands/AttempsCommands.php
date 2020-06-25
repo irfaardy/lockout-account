@@ -13,7 +13,7 @@ class AttempsCommands extends Command
      *
      * @var string
      */
-    protected $signature = 'account:check {username}';
+    protected $signature = 'lockout:check {username}';
 
     /**
      * The console command description.
@@ -47,7 +47,7 @@ class AttempsCommands extends Command
               $ip = $read_enc->ip;
               $table->setRows([
                         ['<fg=yellow>Login attemps',  $attemps],
-                        ['<fg=yellow>Last login attemps',date("Y-m-d H:i:s", $time)],
+                        ['<fg=yellow>Last login attemps',$time],
                         ['<fg=yellow>Last IP Address',empty(end($ip))? "unknown":end($ip)],]);
                      $table->render();
              // $this->line('<fg=yellow>Valid input is  lock, unlock, and attemps.');
