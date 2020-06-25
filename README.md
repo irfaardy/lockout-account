@@ -1,4 +1,7 @@
-# Lockout Account  for  Laravel
+
+
+# **Lockout Account  for  Laravel**
+
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/raja-ongkir/badges/quality-score.png?b=master) ](https://scrutinizer-ci.com/g/irfaardy/raja-ongkir/?branch=master)[![Build Status](https://scrutinizer-ci.com/g/irfaardy/raja-ongkir/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/raja-ongkir/build-status/master)  [![StyleCI](https://github.styleci.io/repos/242054297/shield?branch=master)](https://github.styleci.io/repos/242054297) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://poser.pugx.org/irfa/raja-ongkir/v/stable)](https://packagist.org/packages/irfa/raja-ongkir)
 
 
@@ -8,46 +11,59 @@ This package is useful for locking an account if someone tries to log into your 
 
 <h3>🛠️ Installation with Composer </h3>
 
-    composer require irfa/lockout
+```php
+composer require irfa/lockout
+```
 
 >You can get Composer [ here]( https://getcomposer.org/download/)
 
 ***
 <h2>🛠️ Laravel Setup </h2>
 
-<h3>Add to config/app.php</h3>
+<h3>1. Add to config/app.php</h3>
 
-    'providers' => [
-          ....
-             Irfa\Lockout\LockoutAccountServiceProvider::class, 
-         ];
+```php
+'providers' => [
+      	 ....
+         Irfa\Lockout\LockoutAccountServiceProvider::class, 
+     ];
+```
 
+<h3>2. Add to config/app.php</h3>
 
+```php
+'aliases' => [
+         ....
+    	'Lockout' => Irfa\Lockout\Facades\Lockout::class,
+],
+```
 
-<h3>Add to config/app.php</h3>
-
-    'aliases' => [
-             ....
-        'Lockout' => Irfa\Lockout\Facades\Lockout::class,
-    
-        ],
-
-  <h2>Publish Vendor</h2>
+  <h2>3. Publish Vendor</h2>
 
 
     php artisan vendor:publish --tag=account-lockout
 
-Open .env file and add this line 
+Open .env file and add this line (optional)
 
-    ....
-    LOGIN_ATTEMPS=3
+```php
+....
+LOGIN_ATTEMPS=3
+LOGGING=true
+    
+```
+
+
+
+<h2>Usage</h2>
+
+<hr>
 
 <h2>Unlock Account</h2>
 
 Unlock account with Console artisan
 
-```
-php artisan account:unlock username
+```php
+php artisan lockout:unlock username
 ```
 
 Unlock account programmatically
@@ -66,12 +82,12 @@ class UserManage {
 
 
 
-<h2> Lock Account manualy</h2>
+<h2> Lock Account manually</h2>
 
 Lock account with Console artisan
 
 ```
-php artisan account:lock username
+php artisan lockout:lock username
 ```
 
 Lock Account programmatically
@@ -88,11 +104,15 @@ class UserManage {
 }
 ```
 
-<h2> View Login Attemps</h2>
+<h2> Check Login Attemps</h2>
 
-View lock account with Console artisan
+View login attemps with Console artisan
 
-php artisan account:attemps username
+```
+php artisan lockout:check username
+```
+
+Check Login attemps programmatically
 
 ```php
 use Lockout;
@@ -100,20 +120,85 @@ use Request;
 
 class UserManage {
 	public function account_unlock(Request $request){
-        $lockout = Lockout::showAttemps($request->email);
-        return $lockout;
+        $lockout = Lockout::check($request->email);
+        foreach($lockout as $data){
+            echo $data->username."\n";
+            echo $data->attemps."\n";
+            echo $data->ip."\n";
+            echo $data->last_attemps."\n";
+        }
     }
 }
 ```
 
+<h2>Clear all Login Attemps</h2>
 
+```
+php artisan lockout:clear
+```
 
-## Contributing
+Clear all programmatically
+
+```php
+use Lockout;
+use Request;
+
+class UserManage {
+	public function account_unlock(Request $request){
+       Lockout::clearAll();
+    }
+}
+```
+
+------
+
+**Other Commands**
+
+**show package info**
+
+```php
+php artisan lockout:info
+```
+
+**How to Uninstall**
+
+1. **Run this command** 
+   ( if your application runs in production it is recomended to run ``php artisan down`` before running this command)
+
+```php
+composer remove irfa/lockout
+```
+
+2. **Remove service provider for this package in config/app.php**
+
+```php
+'providers' => [
+      	 ....
+         Irfa\Lockout\LockoutAccountServiceProvider::class, 
+     ];
+```
+
+3. **Remove aliases for this package in config/app.php**
+
+```php
+'aliases' => [
+         ....
+    	'Lockout' => Irfa\Lockout\Facades\Lockout::class,
+],
+```
+
+4. **Remove file config/irfa/lockout.php** 
+   ( if your application runs in production it is recomended to run ``php artisan up`` after running this command)
+
+------
+
+## How to Contributing
 
 1. Fork it (<https://github.com/irfaardy/lockout-account/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some Feature'`)
-4. Push to the branch (`git push origin master)
+3. Commit your changes (`git commit -m 'Add some Feature'`)
+4. Push to the branch (`git push origin master`)
 5. Create a new Pull Request
 ***
+
+
 
