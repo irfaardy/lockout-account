@@ -2,7 +2,6 @@
 namespace Irfa\Lockout\Func;
 
 use Irfa\Lockout\Func\Core;
-use Illuminate\Filesystem\Filesystem;
 
 class Lockout extends Core {
 	
@@ -43,12 +42,7 @@ class Lockout extends Core {
 		return json_decode($ret);
 	}
 	public function clearLocked(){
-		$file = new Filesystem();
-		if($file->cleanDirectory(config('irfa.lockout.lockout_file_path'))){
-			return true;
-		} else{
-			return false;
-		}
+		return $this->clear_all();
 	}
 
 	private function _unlock($username){
