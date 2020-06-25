@@ -9,9 +9,10 @@ class Core
 {
     protected function eventFailedLogin(){
         $ip = Request::ip();
+        $input = Request::input(config('irfa.lockout.input_name'));
         $matchip= config('irfa.lockout.match_ip') == true ? $ip :null;
         $dir = config('irfa.lockout.lockout_file_path');
-        $path = $dir.md5(Request::input(config('irfa.lockout.input_name')));
+        $path = $dir.md5($input);
 
         if(!File::exists($dir)){
              File::makeDirectory($dir, 0750, true);
@@ -34,7 +35,7 @@ class Core
             }
         }
         
-            $content = ['attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => time()];
+            $content = ['username' => $input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => date("Y-m-d H:i:s",time())];
             File::put($path,json_encode($content));
           
     }
@@ -97,14 +98,14 @@ class Core
               return $readf;
               
             } else{
-             return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_unlock_success'));
+             return true;
             }
         } else{
            if(php_sapi_name() == "cli"){
               echo Lang::get('lockoutMessage.user_lock_404')."\n";
                 exit();
            } else{
-             return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_lock_404'));
+             return false;
            }
         }
       }
@@ -119,20 +120,21 @@ class Core
               return $readf;
               
             } else{
-             return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_unlock_success'));
+             return $readf;
             }
         } else{
            if(php_sapi_name() == "cli"){
               echo Lang::get('lockoutMessage.user_lock_404')."\n";
                 exit();
            } else{
-             return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_lock_404'));
+             return false;
            }
         }
       }
 
       public function lock_account($username){
         $ip = php_sapi_name() == "cli"?"lock-via-cli":"lock-via-web";
+        $input = $username;
         $matchip= empty(config('irfa.lockout.match_ip'))?false:config('irfa.lockout.match_ip');
         $dir = config('irfa.lockout.lockout_file_path');
         $attemps = config('irfa.lockout.login_attemps');
@@ -143,20 +145,20 @@ class Core
           }
               $login_fail = "lock";
           
-              $content = ['attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => time()];
+              $content = ['username' => $input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => date("Y-m-d H:i:s",time())];
               File::put($path,json_encode($content));
               if(php_sapi_name() == "cli"){
                 return Lang::get('lockoutMessage.user_lock_success')."\n";
                   
               } else{
-                return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_lock_success'));
+                return true;
                 }
             } catch(Exception $e){
                if(php_sapi_name() == "cli"){
                 return "error";
                   
               } else{
-                return redirect()->back()->with(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.user_lock_fail'));
+                return false;
                 }
             }
       }

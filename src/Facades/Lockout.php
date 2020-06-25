@@ -15,6 +15,6 @@ class Lockout extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \Irfa\Lockout\Func\LockoutFunc::class;
+        return \Irfa\Lockout\Func\Lockout::class;
     }
 }
