@@ -1,6 +1,6 @@
 
 
-# **Lockout Account  for  Laravel**
+# 🔒 **Lockout Account  for  Laravel**
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://poser.pugx.org/irfa/lockout/v)](//packagist.org/packages/irfa/lockout) 
 
 
@@ -159,11 +159,11 @@ php artisan lockout:info
 ```
 -------
 
-<h3>**Change Messages**</h3>
+<h3>Change Messages</h3>
 You can change message in ``resources/lang/{language}/lockoutMessage.php``
 
 -------
-<h3>**How to Uninstall**</h3>
+<h3>How to Uninstall</h3>
 
 1. **Run this command** 
    ( if your application runs in production it is recomended to run ``php artisan down`` before running this command)
