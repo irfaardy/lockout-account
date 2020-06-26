@@ -22,13 +22,13 @@ class LockAccount extends Core
      */
     public function handle($request, Closure $next)
     {
-        if($request->method() == "POST"){
-            if(in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
-                if($this->lockLogin()){
+        if ($request->method() == "POST") {
+            if (in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
+                if ($this->lockLogin()) {
                     $this->eventFailedLogin();
                     $this->logging();
-                    Session::flash(config('irfa.lockout.message_name'),Lang::get('lockoutMessage.locked'));
-                    return redirect(empty(config('irfa.lockout.redirect_url'))?"/":URL::to(config('irfa.lockout.redirect_url')));
+                    Session::flash(config('irfa.lockout.message_name'), Lang::get('lockoutMessage.locked'));
+                    return redirect(empty(config('irfa.lockout.redirect_url')) ? "/" : URL::to(config('irfa.lockout.redirect_url')));
                 }
             }
         }
