@@ -198,6 +198,6 @@ composer remove irfa/lockout
 5. Create a new Pull Request
 ***
 
-**LICENSE**
+**LICENSE**<br>
 <a href="https://github.com/irfaardy/lockout-account/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/irfaardy/lockout-account?style=for-the-badge"></a>
 
