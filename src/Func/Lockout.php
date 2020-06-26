@@ -2,6 +2,7 @@
 namespace Irfa\Lockout\Func;
 
 use Irfa\Lockout\Func\Core;
+use View;
 
 class Lockout extends Core {
 	
@@ -15,7 +16,10 @@ class Lockout extends Core {
         }
         return true;
     }
-
+  
+    public function message(){
+    	return $this->showMessage();
+    }
     public function lock($username){
         if(is_array($username)){
             foreach($username as $key){

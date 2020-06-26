@@ -2,7 +2,7 @@
 namespace  Irfa\Lockout\Func;
 
 use Log;
-use Illuminate\Support\Facades\Request,File,Lang;
+use Illuminate\Support\Facades\Request,File,Lang,Session;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Helper\Table;
 
@@ -50,7 +50,13 @@ class Core
                     Log::notice("Login attemps fail | "."username : ".Request::input(config('irfa.lockout.input_name'))." | ipAddress : ".Request::ip()." | userAgent : ".$_SERVER['HTTP_USER_AGENT'].PHP_EOL);
             }
     }
+    protected function showMessage(){
+      if(Session::has(config('irfa.lockout.message_name'))){
+         return Session::get(config('irfa.lockout.message_name'));
+      }
 
+      return null;
+    }
     protected function lockLogin(){
         $ip = Request::ip();
         $matchip= empty(config('irfa.lockout.match_ip'))?false:config('irfa.lockout.match_ip');

@@ -19,9 +19,7 @@ return [
     |--------------------------------------------------------------------------
     | Input name
     |--------------------------------------------------------------------------
-    | for now only supported file and database
-    | if you choose database you have to migrate first.
-    | default : file
+    | default : email
     */
 
     'input_name' => "email",
@@ -39,7 +37,7 @@ return [
     |--------------------------------------------------------------------------
     | Redirect Url
     |--------------------------------------------------------------------------
-    | For file lockout driver only
+    | Redirect if account is locked
     | default '/login';
     */
 
@@ -66,9 +64,6 @@ return [
     |--------------------------------------------------------------------------
     | Message Name
     |--------------------------------------------------------------------------
-    | Protect your  middleware Group
-    | example: ['web','api']
-    | POST method Only
     */
     'message_name' => "message",
 
