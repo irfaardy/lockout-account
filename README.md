@@ -162,6 +162,12 @@ php artisan lockout:info
 <h3>Change Messages</h3>
 You can change message in ``resources/lang/{language}/lockoutMessage.php``
 
+<h3>Show Message</h3>
+
+```php+HTML
+Lockout::message()
+```
+
 -------
 <h3>How to Uninstall</h3>
 
