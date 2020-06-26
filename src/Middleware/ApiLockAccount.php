@@ -23,6 +23,8 @@ class LockAccount extends Core
         if ($request->method() == "POST") {
             if (in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
                 if ($this->lockLogin()) {
+                    $this->eventFailedLogin();
+                    $this->logging("API");
                     $message['code'] = 403;
                     $message[config('irfa.lockout.message_name')] = Lang::get('lockoutMessage.locked');
                     return response()->json($message);

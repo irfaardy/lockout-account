@@ -45,9 +45,9 @@ class Core
         $this->unlock_account($input);
           
     }
-    protected function logging(){
+    protected function logging($middleware="WEB"){
         if(config('irfa.lockout.logging')){
-                    Log::notice("Login attemps fail | "."username : ".Request::input(config('irfa.lockout.input_name'))." | ipAddress : ".Request::ip()." | userAgent : ".$_SERVER['HTTP_USER_AGENT'].PHP_EOL);
+                    Log::notice($middleware." | Login attemps fail | "."username : ".Request::input(config('irfa.lockout.input_name'))." | ipAddress : ".Request::ip()." | userAgent : ".$_SERVER['HTTP_USER_AGENT'].PHP_EOL);
             }
     }
     protected function showMessage(){

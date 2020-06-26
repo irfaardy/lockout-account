@@ -34,7 +34,16 @@ class LockoutAccountServiceProvider extends ServiceProvider
             \Illuminate\Auth\Events\Authenticated::class,
             CleanLockoutAccount::class
         );
-        $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+
+        if(in_array('api', config('irfa.lockout.protected_middleware_group'))){
+            $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
+        }
+        if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
+             $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+        }
+        if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
+             $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+        }
 
     }
 
