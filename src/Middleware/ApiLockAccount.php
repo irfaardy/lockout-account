@@ -9,7 +9,7 @@ use Lang;
 use Illuminate\Support\Facades\File;
 use Irfa\Lockout\Func\Core;
 
-class LockAccount extends Core
+class ApiLockAccount extends Core
 {
     /**
      * Handle an incoming request.
