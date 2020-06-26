@@ -16,7 +16,9 @@ class Lockout extends Core {
         }
         return true;
     }
-  
+  	public function isLocked($username){
+  		return $this->is_locked($username);
+  	}
     public function message(){
     	return $this->showMessage();
     }

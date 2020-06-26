@@ -20,6 +20,7 @@ class LockoutAccountServiceProvider extends ServiceProvider
         'Irfa\Lockout\Console\Commands\AttempsCommands',
         'Irfa\Lockout\Console\Commands\LockInfoPackage',
         'Irfa\Lockout\Console\Commands\ClearLockCommands',
+        'Irfa\Lockout\Console\Commands\CheckLockedCommands',
     ];
 
     public function register()

@@ -38,9 +38,12 @@ class Core
         
             $content = ['username' => $input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => date("Y-m-d H:i:s",time())];
             File::put($path,json_encode($content));
+            if(File::exists($path)){
+              chmod($path,0750);
+            }
           
     }
-        protected function eventCleanLockoutAccount(){
+    protected function eventCleanLockoutAccount(){
         $input = Request::input(config('irfa.lockout.input_name'));
         $this->unlock_account($input);
           
@@ -50,6 +53,23 @@ class Core
                     Log::notice($middleware." | Login attemps fail | "."username : ".Request::input(config('irfa.lockout.input_name'))." | ipAddress : ".Request::ip()." | userAgent : ".$_SERVER['HTTP_USER_AGENT'].PHP_EOL);
             }
     }
+    protected function is_locked($username){
+        $dir = config('irfa.lockout.lockout_file_path');
+        $attemps = config('irfa.lockout.login_attemps');
+        $path = $dir.md5($username);
+        if(File::exists($path))
+        {
+           $get = json_decode(File::get($path));
+           if($get->attemps > $attemps || $get->attemps == "lock"){
+              return true;
+           } else{
+              return false;
+           }
+        } else{
+            return false;
+        }
+    }
+
     protected function showMessage(){
       if(Session::has(config('irfa.lockout.message_name'))){
          return Session::get(config('irfa.lockout.message_name'));
@@ -59,10 +79,11 @@ class Core
     }
     protected function lockLogin(){
         $ip = Request::ip();
+        $input = Request::input(config('irfa.lockout.input_name'));
         $matchip= empty(config('irfa.lockout.match_ip'))?false:config('irfa.lockout.match_ip');
         $dir = config('irfa.lockout.lockout_file_path');
         $attemps = config('irfa.lockout.login_attemps');
-        $path = $dir.md5(Request::input('email'));
+        $path = $dir.md5($input);
         if(File::exists($path))
         {
                 $get = json_decode(File::get($path));
@@ -167,6 +188,9 @@ class Core
           
                 $content = ['username' => $input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => date("Y-m-d H:i:s",time())];
                 File::put($path,json_encode($content));
+                if(File::exists($path)){
+                  chmod($path,0750);
+                }
                 if(php_sapi_name() == "cli"){
                 return Lang::get('lockoutMessage.user_lock_success')."\n";
                   
