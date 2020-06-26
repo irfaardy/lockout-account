@@ -39,10 +39,10 @@ class LockoutAccountServiceProvider extends ServiceProvider
             $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
         }
         if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
-             $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+                $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
         }
         if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
-             $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+                $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
         }
 
     }
