@@ -159,11 +159,11 @@ php artisan lockout:info
 ```
 -------
 
-**Change Messages**<br>
+<h3>**Change Messages**</h3>
 You can change message in ``resources/lang/{language}/lockoutMessage.php``
 
 -------
-**How to Uninstall**
+<h3>**How to Uninstall**</h3>
 
 1. **Run this command** 
    ( if your application runs in production it is recomended to run ``php artisan down`` before running this command)
