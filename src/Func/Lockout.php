@@ -18,7 +18,7 @@ class Lockout extends Core {
     }
   
     public function message(){
-    	return $this->showMessage();
+        return $this->showMessage();
     }
     public function lock($username){
         if(is_array($username)){

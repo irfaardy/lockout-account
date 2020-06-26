@@ -51,11 +51,11 @@ class Core
             }
     }
     protected function showMessage(){
-      if(Session::has(config('irfa.lockout.message_name'))){
-         return Session::get(config('irfa.lockout.message_name'));
-      }
+        if(Session::has(config('irfa.lockout.message_name'))){
+            return Session::get(config('irfa.lockout.message_name'));
+        }
 
-      return null;
+        return null;
     }
     protected function lockLogin(){
         $ip = Request::ip();
