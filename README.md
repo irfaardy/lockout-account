@@ -102,6 +102,27 @@ class UserManage {
 }
 ```
 
+<h3>Check Locked Account</h3>
+
+```
+use Lockout;
+use Request;
+
+class UserManage {
+	public function account_unlock(Request $request){
+        $check = Lockout::isLocked($request->email);//return boolean
+        if($check){
+        	return "Locked";
+        } else{
+        	return "Unlocked";
+        }
+        
+    }
+}
+```
+
+
+
 <h2> Check Login Attemps</h2>
 
 View login attemps with Console artisan

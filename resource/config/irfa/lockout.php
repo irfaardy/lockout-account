@@ -14,7 +14,7 @@ return [
     |--------------------------------------------------------------------------
     | Write log if login fail
     */
-    'logging' => env('LOGGING', 3),
+    'logging' => env('LOGGING', true),
     /*
     |--------------------------------------------------------------------------
     | Input name
@@ -28,8 +28,8 @@ return [
     |--------------------------------------------------------------------------
     | File path
     |--------------------------------------------------------------------------
-    | For file lockout driver only
-    | default storage_path('lockout/')
+    | You can change the file location as you wish
+    | default storage_path('lockout/account/locked/')
     */
 
     'lockout_file_path' => storage_path('lockout/account/locked/'),
