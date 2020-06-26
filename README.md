@@ -157,7 +157,11 @@ class UserManage {
 ```php
 php artisan lockout:info
 ```
+-------
+**Change Messages**
+You can change message in ``resources/lang/{language}/lockoutMessage.php``
 
+-------
 **How to Uninstall**
 
 1. **Run this command** 
