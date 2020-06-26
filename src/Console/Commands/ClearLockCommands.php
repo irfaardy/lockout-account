@@ -46,9 +46,9 @@ class ClearLockCommands extends Command
                         ['<fg=green>Locked Account(s) Cleared.'],
                        
                     ]);
-                     $table->render();
+                        $table->render();
         } else{
-             $this->line('<fg=red> Clearing failed.');
+                $this->line('<fg=red> Clearing failed.');
         }
     }
     

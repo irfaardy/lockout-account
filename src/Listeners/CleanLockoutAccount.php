@@ -5,7 +5,7 @@ namespace  Irfa\Lockout\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Support\Facades\Request,File;
+use Illuminate\Support\Facades\Request, File;
 use Irfa\Lockout\Func\Core;
 
 class CleanLockoutAccount extends Core

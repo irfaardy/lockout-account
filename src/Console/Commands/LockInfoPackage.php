@@ -37,11 +37,11 @@ class LockInfoPackage extends Command
      */
     public function handle()
     {
-       $this->informasi();
+        $this->informasi();
     }
 
     private function informasi(){
-         $this->line(" _____      __             _                _               _   
+            $this->line(" _____      __             _                _               _   
 |_   _|    / _|           | |              | |             | |  
   | | _ __| |_ __ _ ______| |     ___   ___| | _____  _   _| |_ 
   | || '__|  _/ _` |______| |    / _ \ / __| |/ / _ \| | | | __|
@@ -53,8 +53,8 @@ class LockInfoPackage extends Command
     $this->line('Version 1.0.0 (2020)');
     $this->line('<fg=cyan>https://github.com/irfaardy/lockout-account');
     $conf = config('irfa.lockout');
-     $this->line('<fg=default>-------------------------------------------------------------------------------');
-     $this->line('<fg=yellow>Configuration');
+        $this->line('<fg=default>-------------------------------------------------------------------------------');
+        $this->line('<fg=yellow>Configuration');
     foreach($conf as $key => $val){
         if(is_array($val)){
             foreach($val as $v){
@@ -64,7 +64,7 @@ class LockInfoPackage extends Command
                 $vl = $val;
             }
 
-         $this->line('<fg=default>'.$key.' = <fg=cyan>'.$vl);
+            $this->line('<fg=default>'.$key.' = <fg=cyan>'.$vl);
         }
     }
     

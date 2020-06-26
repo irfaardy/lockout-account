@@ -46,9 +46,9 @@ class LockCommands extends Command
                         ['<fg=green>'.$this->argument('username').' successfully locked.'],
                        
                     ]);
-                     $table->render();
+                        $table->render();
         } else{
-             $this->line('<fg=red> Locking failed.');
+                $this->line('<fg=red> Locking failed.');
         }
     }
     

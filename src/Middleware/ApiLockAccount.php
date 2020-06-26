@@ -20,11 +20,11 @@ class LockAccount extends Core
      */
     public function handle($request, Closure $next)
     {
-        if($request->method() == "POST"){
-            if(in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
-                if($this->lockLogin()){
+        if ($request->method() == "POST") {
+            if (in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
+                if ($this->lockLogin()) {
                     $message['code'] = 403;
-                    $message[config('irfa.lockout.message_name')] =Lang::get('lockoutMessage.locked');
+                    $message[config('irfa.lockout.message_name')] = Lang::get('lockoutMessage.locked');
                     return response()->json($message);
                 }
             }

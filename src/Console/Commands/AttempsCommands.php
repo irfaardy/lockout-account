@@ -39,18 +39,18 @@ class AttempsCommands extends Command
      */
     public function handle(Core $core)
     { 
-     $ret = $core->check_account($this->argument('username'));
+        $ret = $core->check_account($this->argument('username'));
             $table = new Table($this->output);
-              $read_enc = json_decode( $ret);
-              $time = $read_enc->last_attemps;
-              $attemps = $read_enc->attemps;
-              $ip = $read_enc->ip;
-              $table->setRows([
+                $read_enc = json_decode( $ret);
+                $time = $read_enc->last_attemps;
+                $attemps = $read_enc->attemps;
+                $ip = $read_enc->ip;
+                $table->setRows([
                         ['<fg=yellow>Login attemps',  $attemps],
                         ['<fg=yellow>Last login attemps',$time],
                         ['<fg=yellow>Last IP Address',empty(end($ip))? "unknown":end($ip)],]);
-                     $table->render();
-             // $this->line('<fg=yellow>Valid input is  lock, unlock, and attemps.');
+                        $table->render();
+                // $this->line('<fg=yellow>Valid input is  lock, unlock, and attemps.');
         
     }
     
