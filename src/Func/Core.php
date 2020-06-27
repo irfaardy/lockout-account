@@ -23,11 +23,14 @@ class Core extends Variable
     /**
      * write login attemps if login attemp is triggered.
      *
+     * @param string $username
      * @return void
      */
-    protected function eventFailedLogin(){
+    protected function eventFailedLogin($username=null){
         
-
+        if($username != null){
+          $this->setPath($username);
+        }
         if(!File::exists($this->dir)){
                 File::makeDirectory($this->dir, 0755, true);
         }
@@ -49,7 +52,7 @@ class Core extends Variable
             }
         }
         
-            $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$ip],'last_attemps' => date("Y-m-d H:i:s",time())];
+            $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$this->ip],'last_attemps' => date("Y-m-d H:i:s",time())];
             File::put($this->path,json_encode($content));
             if(File::exists($this->path)){
               chmod($this->path,0755);
@@ -88,11 +91,11 @@ class Core extends Variable
        * @return boolean
      */
     protected function is_locked($username){
-         
+        $this->setPath($username);
         if(File::exists($this->path))
         {
            $get = json_decode(File::get($this->path));
-           if($get->attemps > $attemps || $get->attemps == "lock"){
+           if($get->attemps > $this->attemps || $get->attemps == "lock"){
               return true;
            } else{
               return false;
@@ -120,15 +123,19 @@ class Core extends Variable
      *
      * @return boolean
      */
-    protected function lockLogin(){
+    protected function lockLogin($username = null){
         
+        if(php_sapi_name() == "cli" AND $username != null){
+          $this->setPath($username);
+        }
+
         if(File::exists($this->path))
         {
                 $get = json_decode(File::get($this->path));
                 if($get->attemps == "lock"){
                 return true;
                 }
-                if($get->attemps > $attemps){
+                if($get->attemps > $this->attemps){
                     if($matchip){
                     if($this->checkIp($ip_list,$this->ip)){
                         return true;
@@ -177,9 +184,11 @@ class Core extends Variable
      /**
      * Unlocking account manually.
      *
-     * @return boolean or json(if cli)
+     * @param string $username
+     * @return mixed
      */
     public function unlock_account($username){
+        $this->setPath($username);
          if(File::exists($this->path)){
             $readf = File::get($this->path);
                 File::delete($this->path);
@@ -193,7 +202,32 @@ class Core extends Variable
         } else{
             if(php_sapi_name() == "cli"){
                 echo Lang::get('lockoutMessage.user_lock_404')."\n";
-                exit();
+                return false;
+            } else{
+                return false;
+            }
+        }
+      }
+
+    /**
+     * For Testing
+     *
+     * @return boolean or json(if cli)
+     */
+    public function test_unlock_account($username){
+        $this->setPath($username);
+         if(File::exists($this->path)){
+            $readf = File::get($this->path);
+                File::delete($this->path);
+            if(php_sapi_name() == "cli"){
+                return true;
+              
+            } else{
+                return true;
+            }
+        } else{
+            if(php_sapi_name() == "cli"){
+               return false;
             } else{
                 return false;
             }
@@ -207,6 +241,7 @@ class Core extends Variable
      * @return boolean
      */
     public function check_account($username){
+      $this->setPath($username);
        if(File::exists($this->path)){
               $readf = File::get($this->path);
               if(php_sapi_name() == "cli"){
@@ -234,7 +269,7 @@ class Core extends Variable
      */
     public function lock_account($username){
         $sapi = php_sapi_name() == "cli"?"lock-via-cli":"lock-via-web";
-        
+        $this->setPath($username);
         try{
           if(!File::exists($this->dir)){
               File::makeDirectory($this->dir, 0755, true);

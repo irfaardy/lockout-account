@@ -50,7 +50,7 @@ class Lockout extends Core {
     public function clearLocked(){
         return $this->clear_all();
     }
-
+    
     private function _unlock($username){
         $this->unlock_account($username);
     }

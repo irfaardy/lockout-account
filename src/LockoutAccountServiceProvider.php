@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Irfa\Lockout\Listeners\LockoutAccount;
 use Irfa\Lockout\Listeners\LoginLock;
 use Irfa\Lockout\Listeners\CleanLockoutAccount;
+use Artisan;
 
 class LockoutAccountServiceProvider extends ServiceProvider
 {
@@ -21,10 +22,13 @@ class LockoutAccountServiceProvider extends ServiceProvider
         'Irfa\Lockout\Console\Commands\LockInfoPackage',
         'Irfa\Lockout\Console\Commands\ClearLockCommands',
         'Irfa\Lockout\Console\Commands\CheckLockedCommands',
+        'Irfa\Lockout\Console\Commands\TestingCommands',
     ];
 
     public function register()
     {
+
+       
         $router = $this->app['router'];
         $this->commands($this->commands);
         \Illuminate\Support\Facades\Event::listen(
@@ -35,16 +39,15 @@ class LockoutAccountServiceProvider extends ServiceProvider
             \Illuminate\Auth\Events\Authenticated::class,
             CleanLockoutAccount::class
         );
-
-        if(in_array('api', config('irfa.lockout.protected_middleware_group'))){
-            $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
-        }
-        if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
-                $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
-        }
-        if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
-                $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
-        }
+            if(in_array('api', config('irfa.lockout.protected_middleware_group'))){
+                $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
+            }
+            if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
+                    $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+            }
+            if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
+                    $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+            }
 
     }
 
