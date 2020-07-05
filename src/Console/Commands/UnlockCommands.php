@@ -42,16 +42,18 @@ class UnlockCommands extends Command
         $ret = $core->unlock_account($this->argument('username'));
             $table = new Table($this->output);
                 $read_enc = json_decode( $ret);
-                $time = $read_enc->last_attemps;
-                $attemps = $read_enc->attemps;
-                $ip = $read_enc->ip;
-                $table->setRows([
-                        ['<fg=cyan>Login attemps',  $attemps],
-                        ['<fg=cyan>Last login attemps',$time],
-                        ['<fg=cyan>Last IP Address',empty(end($ip))? "unknown":end($ip)],
-                        ['<fg=cyan>Unlocked at',date('Y-m-d H:i:s', time())],
-                    ]);
-                        $table->render();
+                if(!empty($read_enc)){
+                    $time = $read_enc->last_attemps;
+                    $attemps = $read_enc->attemps;
+                    $ip = $read_enc->ip;
+                    $table->setRows([
+                            ['<fg=cyan>Login attemps',  $attemps],
+                            ['<fg=cyan>Last login attemps',$time],
+                            ['<fg=cyan>Last IP Address',empty(end($ip))? "unknown":end($ip)],
+                            ['<fg=cyan>Unlocked at',date('Y-m-d H:i:s', time())],
+                        ]);
+                            $table->render();
+                }
                 // $this->line('<fg=yellow>Valid input is  lock, unlock, and attemps.');
         
     }
