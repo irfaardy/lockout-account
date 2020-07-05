@@ -13,7 +13,7 @@ This package is useful for locking an account if someone tries to log into your 
 composer require irfa/lockout
 ```
 
->You can get Composer [ here]( https://getcomposer.org/download/)
+>You can get Composer <a href="https://getcomposer.org/download/" target="blank">here</a>
 
 ***
 <h2>🛠️ Laravel Setup </h2>
