@@ -66,6 +66,18 @@ return [
     |--------------------------------------------------------------------------
     */
     'message_name' => "message",
+    /*
+    |--------------------------------------------------------------------------
+    | Except Account
+    |--------------------------------------------------------------------------
+    | If this is filled in, then the account specified here will never be locked
+    | example: ['user@domain.com','myaccount','admin321@mail.com']
+    | Default:
+    | enable_except_account = false
+    | except_account = []
+    */
+    'enable_except_account' => false,
+    'except_account' => [],
 
 
 ];

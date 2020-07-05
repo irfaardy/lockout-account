@@ -29,7 +29,12 @@ class LockoutAccount extends Core
     public function handle(Failed $event)
     {
         $this->logging();
-        $this->eventFailedLogin();
+        if(!$this->exceptAccount()){
+
+           $this->eventFailedLogin();
+           
+        }
+
         
     }
 }

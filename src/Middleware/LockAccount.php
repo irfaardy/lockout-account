@@ -22,6 +22,9 @@ class LockAccount extends Core
      */
     public function handle($request, Closure $next)
     {
+        if($this->exceptAccount()){
+             return $next($request);
+        } else{
         if ($request->method() == "POST") {
             if (in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
                 if ($this->lockLogin()) {
@@ -31,6 +34,7 @@ class LockAccount extends Core
                     return redirect(empty(config('irfa.lockout.redirect_url')) ? "/" : URL::to(config('irfa.lockout.redirect_url')));
                 }
             }
+        }
         }
             return $next($request);
     }

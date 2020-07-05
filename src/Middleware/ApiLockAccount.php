@@ -20,6 +20,10 @@ class ApiLockAccount extends Core
      */
     public function handle($request, Closure $next)
     {
+        if($this->exceptAccount()){
+             return $next($request);
+        }
+        
         if ($request->method() == "POST") {
             if (in_array($request->path(), config('irfa.lockout.protected_action_path'))) {
                 if ($this->lockLogin()) {

@@ -9,15 +9,22 @@ use Irfa\Lockout\Initializing\Variable;
 
 class Core extends Variable
 {
-    
     /**
-     * Initializing Variable.
-     * Irfa\Lockout\Initializing\Variable
+     * Except account.
      *
-     * @return void
+     * @return boolean
      */
-    public function __construct() {
+    protected function exceptAccount(){
         $this->initVar();
+        if($this->except_enabled){
+          if(in_array($this->input, $this->except_accounts)){
+            return true;
+          } else{
+            return false;
+          }
+        } else{
+         return false;
+        }
     }
 
     /**
@@ -27,7 +34,7 @@ class Core extends Variable
      * @return void
      */
     protected function eventFailedLogin($username=null){
-        
+        $this->initVar();
         if($username !== null){
             $this->setPath($username);
         }
@@ -67,6 +74,7 @@ class Core extends Variable
      * @return void
      */
     protected function eventCleanLockoutAccount() {
+       $this->initVar();
         $this->unlock_account($this->input);
           
     }
@@ -91,6 +99,7 @@ class Core extends Variable
          * @return boolean
          */
     protected function is_locked($username){
+        $this->initVar();
         $this->setPath($username);
         if(File::exists($this->path))
         {
@@ -124,7 +133,7 @@ class Core extends Variable
      * @return boolean
      */
     protected function lockLogin($username = null){
-        
+         $this->initVar();
         if(php_sapi_name() == "cli" AND $username != null){
             $this->setPath($username);
         }
@@ -136,16 +145,8 @@ class Core extends Variable
                 return true;
                 }
                 if($get->attemps > $this->attemps){
-                    // if($matchip){
-                    // if($this->checkIp($ip_list,$this->ip)){
-                    //     return true;
-                    // } else{
-                    //     return false;
-                    // }
-                    // } 
-                    // else{
+                   
                     return true;
-                    // }
                 } else {
                 return false;
                 }
@@ -160,6 +161,7 @@ class Core extends Variable
          * @return boolean
          */
     private function checkIp($ip_list,$ip){
+       $this->initVar();
         if(collect($ip_list)->contains($ip)){
             return true;
         } else{
@@ -174,6 +176,7 @@ class Core extends Variable
          * @return boolean
          */
     public function clear_all(){
+       $this->initVar();
         $file = new Filesystem();
         if($file->cleanDirectory($this->path)){
         return true;
@@ -189,6 +192,7 @@ class Core extends Variable
          * @return mixed
          */
     public function unlock_account($username){
+        $this->initVar();
         $this->setPath($username);
             if(File::exists($this->path)){
             $readf = File::get($this->path);
@@ -216,6 +220,7 @@ class Core extends Variable
      * @return mixed
      */
     public function test_unlock_account($username){
+        $this->initVar();
         $this->setPath($username);
             if(File::exists($this->path)){
             $readf = File::get($this->path);
@@ -242,6 +247,7 @@ class Core extends Variable
      * @return mixed
      */
     public function check_account($username){
+        $this->initVar();
         $this->setPath($username);
         if(File::exists($this->path)){
                 $readf = File::get($this->path);
@@ -269,6 +275,7 @@ class Core extends Variable
          * @return mixed
          */
     public function lock_account($username){
+        $this->initVar();
         $sapi = php_sapi_name() == "cli"?"lock-via-cli":"lock-via-web";
         $this->setPath($username);
         try{
