@@ -10,8 +10,8 @@ use Str;
 
 class TestingCommands extends Command
 {
-    private $error=0;
-    private $success=0;
+    private $error = 0;
+    private $success = 0;
     /**
      * The name and signature of the console command.
      *
@@ -43,9 +43,9 @@ class TestingCommands extends Command
      */
     public function handle()
     {
-    	$curTime = microtime(true);
+        $curTime = microtime(true);
         $domain = 'locktest-'.md5(strtolower(config("app.name"))).'@'.strtolower(config("app.name")).".com";
-         $this->line('<fg=default>--------------------------------------------');
+            $this->line('<fg=default>--------------------------------------------');
         $this->testConfigurations();
         $this->line('<fg=default>Testing Mail : <fg=cyan>'.$domain);        
         $this->testWrite($domain);        
@@ -60,54 +60,54 @@ class TestingCommands extends Command
     }
     private function testWrite($domain){
         $test = new Testing();
-         if( $test->testWriteEventFailedLogin($domain) AND $test->testWritable($domain)){
-           $this->line('<fg=default>Auto Lock : <fg=green>OK');
+            if( $test->testWriteEventFailedLogin($domain) AND $test->testWritable($domain)){
+            $this->line('<fg=default>Auto Lock : <fg=green>OK');
         } elseif(!$test->testWritable($domain)){
             $this->success += 1;
             $this->line('<fg=default>Auto Lock : <fg=yellow>Warning (Permission denied)');
         } else{
             $this->error += 1;
-             $this->line('<fg=default>Auto Lock : <fg=red>Failed');
+                $this->line('<fg=default>Auto Lock : <fg=red>Failed');
         }
     } 
     private function testManualLock($domain){
         $test = new Testing();
-         if( $test->testManualLocking($domain)){
+            if( $test->testManualLocking($domain)){
             $this->success += 1;
-           $this->line('<fg=default>Manual Lock : <fg=green>OK');
+            $this->line('<fg=default>Manual Lock : <fg=green>OK');
         } else{
             $this->error += 1;
-             $this->line('<fg=default>Manual Lock : <fg=red>Failed');
+                $this->line('<fg=default>Manual Lock : <fg=red>Failed');
         }
     }
     private function testUnlock($domain){
         $test = new Testing();
-         if( $test->testUnlocking($domain)){
-           $this->success += 1;
-           $this->line('<fg=default>Unlock Account : <fg=green>OK');
+            if( $test->testUnlocking($domain)){
+            $this->success += 1;
+            $this->line('<fg=default>Unlock Account : <fg=green>OK');
         } else{
-             $this->error += 1;
-             $this->line('<fg=default>Unlock Account : <fg=red>Failed');
+                $this->error += 1;
+                $this->line('<fg=default>Unlock Account : <fg=red>Failed');
         }
     }
 
     private function testLocked($domain){
         $test = new Testing();
-         if( $test->testLockLogin($domain)){
-           $this->success += 1;
-           $this->line('<fg=default>Try Login with locked account : <fg=green>Account is Locked');
+            if( $test->testLockLogin($domain)){
+            $this->success += 1;
+            $this->line('<fg=default>Try Login with locked account : <fg=green>Account is Locked');
         } else{
-             $this->error += 1;
-             $this->line('<fg=default>Try Login with locked account : <fg=red>Account logged in');
+                $this->error += 1;
+                $this->line('<fg=default>Try Login with locked account : <fg=red>Account logged in');
         }
     }
 
     private function testConfigurations(){
-    	 $test = new Testing();
-    	 $res  = $test->testConfig();
+            $test = new Testing();
+            $res  = $test->testConfig();
     	 
-    	 	$table = new Table($this->output);
-    	 	$this->line('<fg=cyan>Testing Config:');
+                $table = new Table($this->output);
+                $this->line('<fg=cyan>Testing Config:');
             $table->setRows([
                         ['<fg=default>login_attemps',isset($res['login_attemps']) ? $res['login_attemps']:"<fg=red>Not Found"],
                         ['<fg=default>logging',isset($res['logging']) ? $res['logging']:"<fg=red>Not Found"],
@@ -132,12 +132,12 @@ class TestingCommands extends Command
     }
 
     private function configCheck($res){
-         if($res['err'] > 0){
+            if($res['err'] > 0){
             $this->line('<fg=red>Config invalid, testing is canceled.');
             $this->line('<fg=default>--------------------------------------------');
             $this->line('<fg=default>Tested at: '.date('Y-m-d H:m:s',time()));
             exit();
-         }  
+            }  
     }
 
     private function configExists($res){
@@ -147,7 +147,7 @@ class TestingCommands extends Command
             $this->line('<fg=default>--------------------------------------------');
             $this->line('<fg=default>Tested at: '.date('Y-m-d H:m:s',time()));
             exit();
-         }
+            }
     }
   
    

@@ -1,7 +1,6 @@
 
-
 # 🔒 **Json Lockout Account  for  Laravel**
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://poser.pugx.org/irfa/lockout/v)](//packagist.org/packages/irfa/lockout) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://flat.badgen.net/packagist/v/irfa/lockout/latest?label=Packagist)](//packagist.org/packages/irfa/lockout)
 
 
 This package is useful for locking an account if someone tries to log into your account, this package can be implemented into the admin dashboard login, information system, cloud, etc.
@@ -13,7 +12,7 @@ This package is useful for locking an account if someone tries to log into your 
 composer require irfa/lockout
 ```
 
->You can get Composer [ here]( https://getcomposer.org/download/)
+>You can get Composer <a href="https://getcomposer.org/download/" target="_blank">here</a>
 
 ***
 <h2>🛠️ Laravel Setup </h2>
@@ -173,16 +172,14 @@ class UserManage {
 
 **Other Commands**
 
-**show package info**
-
 ```php
-php artisan lockout:info
-php artisan lockout:diagnose
+php artisan lockout:info //Show more info this package
+php artisan lockout:diagnose //diagnose and testing lockout account
 ```
 -------
 
 <h3>Change Messages</h3>
-You can change message in ``resources/lang/{language}/lockoutMessage.php``
+You can change message in `resources/lang/{language}/lockoutMessage.php`
 
 <h3>Show Message</h3>
 
@@ -227,7 +224,7 @@ composer remove irfa/lockout
 
 1. Fork it (<https://github.com/irfaardy/lockout-account/fork>)
 3. Commit your changes (`git commit -m 'Add some Feature'`)
-4. Push to the branch (`git push origin master`)
+4. Push to the branch (`git push origin version`)
 5. Create a new Pull Request
 ***
 
