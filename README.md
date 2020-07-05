@@ -177,7 +177,7 @@ class UserManage {
 
 ```php
 php artisan lockout:info
-php artisan lockout:test
+php artisan lockout:diagnose
 ```
 -------
 
