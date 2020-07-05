@@ -1,7 +1,7 @@
 
 
 # 🔒 **Json Lockout Account  for  Laravel**
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://poser.pugx.org/irfa/lockout/v)](//packagist.org/packages/irfa/lockout) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://poser.pugx.org/irfa/lockout/v)](//packagist.org/packages/irfa/lockout)
 
 
 This package is useful for locking an account if someone tries to log into your account, this package can be implemented into the admin dashboard login, information system, cloud, etc.
