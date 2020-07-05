@@ -2,7 +2,7 @@
 namespace  Irfa\Lockout\Func;
 
 use Log;
-use Illuminate\Support\Facades\Request,File,Lang,Session;
+use Illuminate\Support\Facades\Request, File, Lang, Session;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Helper\Table;
 use Irfa\Lockout\Initializing\Variable;
@@ -16,7 +16,7 @@ class Core extends Variable
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct() {
         $this->initVar();
     }
 
@@ -29,7 +29,7 @@ class Core extends Variable
     protected function eventFailedLogin($username=null){
         
         if($username !== null){
-          $this->setPath($username);
+            $this->setPath($username);
         }
         if(!File::exists($this->dir)){
                 File::makeDirectory($this->dir, 0755, true);
@@ -55,7 +55,7 @@ class Core extends Variable
             $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$this->ip],'last_attemps' => date("Y-m-d H:i:s",time())];
             File::put($this->path,json_encode($content));
             if(File::exists($this->path)){
-              chmod($this->path,0755);
+                chmod($this->path,0755);
             }
           
     }
@@ -66,7 +66,7 @@ class Core extends Variable
      * @param  string  $rootNamespace
      * @return void
      */
-    protected function eventCleanLockoutAccount(){
+    protected function eventCleanLockoutAccount() {
         $this->unlock_account($this->input);
           
     }
@@ -78,40 +78,40 @@ class Core extends Variable
      * @param  string  $middleware
      * @return void
      */
-    protected function logging($middleware="WEB"){
-        if(config('irfa.lockout.logging')){
+    protected function logging($middleware = "WEB") {
+        if (config('irfa.lockout.logging')) {
                     Log::notice($middleware." | Login attemps fail | "."username : ".Request::input(config('irfa.lockout.input_name'))." | ipAddress : ".Request::ip()." | userAgent : ".$_SERVER['HTTP_USER_AGENT'].PHP_EOL);
             }
     }
 
-     /**
-       * Check if user is locked
-       *
-       * @param  string  $username
-       * @return boolean
-     */
+        /**
+         * Check if user is locked
+         *
+         * @param  string  $username
+         * @return boolean
+         */
     protected function is_locked($username){
         $this->setPath($username);
         if(File::exists($this->path))
         {
-           $get = json_decode(File::get($this->path));
-           if($get->attemps > $this->attemps || $get->attemps == "lock"){
-              return true;
-           } else{
-              return false;
-           }
+            $get = json_decode(File::get($this->path));
+            if($get->attemps > $this->attemps || $get->attemps == "lock"){
+                return true;
+            } else{
+                return false;
+            }
         } else{
             return false;
         }
     }
 
     /**
-       * Show message if failed x attemps
-       *
-       * @return mixed
+     * Show message if failed x attemps
+     *
+     * @return mixed
      */
-    protected function showMessage(){
-        if(Session::has(config('irfa.lockout.message_name'))){
+    protected function showMessage() {
+        if (Session::has(config('irfa.lockout.message_name'))) {
             return Session::get(config('irfa.lockout.message_name'));
         }
 
@@ -126,7 +126,7 @@ class Core extends Variable
     protected function lockLogin($username = null){
         
         if(php_sapi_name() == "cli" AND $username != null){
-          $this->setPath($username);
+            $this->setPath($username);
         }
 
         if(File::exists($this->path))
@@ -146,19 +146,19 @@ class Core extends Variable
                     // else{
                     return true;
                     // }
-                } else{
+                } else {
                 return false;
                 }
-        } else{
+        } else {
             return false;
             }
     }
 
-     /**
-     * Check ip locked
-     *
-     * @return boolean
-     */
+        /**
+         * Check ip locked
+         *
+         * @return boolean
+         */
     private function checkIp($ip_list,$ip){
         if(collect($ip_list)->contains($ip)){
             return true;
@@ -168,11 +168,11 @@ class Core extends Variable
 
     }
 
-     /**
-     * Clear all locked account
-     *
-     * @return boolean
-     */
+        /**
+         * Clear all locked account
+         *
+         * @return boolean
+         */
     public function clear_all(){
         $file = new Filesystem();
         if($file->cleanDirectory($this->path)){
@@ -182,15 +182,15 @@ class Core extends Variable
         }
     }
 
-     /**
-     * Unlocking account manually.
-     *
-     * @param string $username
-     * @return mixed
-     */
+        /**
+         * Unlocking account manually.
+         *
+         * @param string $username
+         * @return mixed
+         */
     public function unlock_account($username){
         $this->setPath($username);
-         if(File::exists($this->path)){
+            if(File::exists($this->path)){
             $readf = File::get($this->path);
                 File::delete($this->path);
             if(php_sapi_name() == "cli"){
@@ -208,7 +208,7 @@ class Core extends Variable
                 return false;
             }
         }
-      }
+        }
 
     /**
      * For Testing
@@ -217,7 +217,7 @@ class Core extends Variable
      */
     public function test_unlock_account($username){
         $this->setPath($username);
-         if(File::exists($this->path)){
+            if(File::exists($this->path)){
             $readf = File::get($this->path);
                 File::delete($this->path);
             if(php_sapi_name() == "cli"){
@@ -228,12 +228,12 @@ class Core extends Variable
             }
         } else{
             if(php_sapi_name() == "cli"){
-               return false;
+                return false;
             } else{
                 return false;
             }
         }
-      }
+        }
 
     /**
      * Check account with details
@@ -242,59 +242,59 @@ class Core extends Variable
      * @return mixed
      */
     public function check_account($username){
-      $this->setPath($username);
-       if(File::exists($this->path)){
-              $readf = File::get($this->path);
-              if(php_sapi_name() == "cli"){
+        $this->setPath($username);
+        if(File::exists($this->path)){
+                $readf = File::get($this->path);
+                if(php_sapi_name() == "cli"){
                 
-                  return $readf;
+                    return $readf;
                 
-              } else{
-                  return $readf;
-              }
-          } else{
-              if(php_sapi_name() == "cli"){
-                  echo Lang::get('lockoutMessage.user_lock_404')."\n";
-                  exit();
-              } else{
-                  return false;
-              }
-          }
+                } else{
+                    return $readf;
+                }
+            } else{
+                if(php_sapi_name() == "cli"){
+                    echo Lang::get('lockoutMessage.user_lock_404')."\n";
+                    exit();
+                } else{
+                    return false;
+                }
+            }
         }
 
-     /**
-     * Locking account manually
-     *
-     * @param string $username
-     * @return mixed
-     */
+        /**
+         * Locking account manually
+         *
+         * @param string $username
+         * @return mixed
+         */
     public function lock_account($username){
         $sapi = php_sapi_name() == "cli"?"lock-via-cli":"lock-via-web";
         $this->setPath($username);
         try{
-          if(!File::exists($this->dir)){
-              File::makeDirectory($this->dir, 0755, true);
-          }
-              $login_fail = "lock";
+            if(!File::exists($this->dir)){
+                File::makeDirectory($this->dir, 0755, true);
+            }
+                $login_fail = "lock";
         
-              $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => [$sapi],'last_attemps' => date("Y-m-d H:i:s",time())];
-              File::put($this->path,json_encode($content));
-              if(File::exists($this->path)){
+                $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => [$sapi],'last_attemps' => date("Y-m-d H:i:s",time())];
+                File::put($this->path,json_encode($content));
+                if(File::exists($this->path)){
                 chmod($this->path,0755);
-              }
-              if(php_sapi_name() == "cli"){
+                }
+                if(php_sapi_name() == "cli"){
                 return Lang::get('lockoutMessage.user_lock_success')."\n";
                 
-              } else{
-              return true;
-              }
-          } catch(\Exception $e){
-              if(php_sapi_name() == "cli"){
+                } else{
+                return true;
+                }
+            } catch(\Exception $e){
+                if(php_sapi_name() == "cli"){
                 return "error";
                 
-              } else{
+                } else{
                 return false;
-              }
-          }
+                }
+            }
     }
 }
