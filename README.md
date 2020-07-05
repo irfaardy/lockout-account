@@ -179,7 +179,7 @@ php artisan lockout:diagnose //diagnose and testing lockout account
 -------
 
 <h3>Change Messages</h3>
-You can change message in ``resources/lang/{language}/lockoutMessage.php``
+You can change message in `resources/lang/{language}/lockoutMessage.php`
 
 <h3>Show Message</h3>
 
@@ -224,7 +224,7 @@ composer remove irfa/lockout
 
 1. Fork it (<https://github.com/irfaardy/lockout-account/fork>)
 3. Commit your changes (`git commit -m 'Add some Feature'`)
-4. Push to the branch (`git push origin master`)
+4. Push to the branch (`git push origin version`)
 5. Create a new Pull Request
 ***
 
