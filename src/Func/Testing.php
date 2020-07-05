@@ -23,6 +23,8 @@ class Testing extends Core {
             $this->confProtectActionPath();
             $this->confProtectMiddleware();
             $this->confMessage();
+            $this->confExceptEnabled();
+            $this->confExceptAccount();
   
         } else{
             $this->ret['err'] +=1;
@@ -97,7 +99,7 @@ class Testing extends Core {
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['login_attemps'] ='<fg=yellow>Must be a number';
+                $this->ret['login_attemps'] ='<fg=red>Must be a number';
             }
     }
 
@@ -107,7 +109,7 @@ class Testing extends Core {
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['logging'] = '<fg=yellow>Must be a Boolean'; 
+                $this->ret['logging'] = '<fg=red>Must be a Boolean'; 
             }
     }
     private function confInput(){
@@ -117,7 +119,7 @@ class Testing extends Core {
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['input_name'] = '<fg=yellow>Must be a String'; 
+                $this->ret['input_name'] = '<fg=red>Must be a String'; 
             }
     }
      private function confFilePath(){
@@ -135,16 +137,22 @@ class Testing extends Core {
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['redirect_url'] = '<fg=yellow>Must be provided'; 
+                $this->ret['redirect_url'] = '<fg=red>Must be provided'; 
             }
     }
     private function confProtectActionPath(){
         if(is_array(config('irfa.lockout.protected_action_path'))){
                 $this->ret['protected_action_path'] = '<fg=green>OK';
+                 if(!empty(config('irfa.lockout.protected_action_path'))){
+                    $this->ret['protected_action_path'] = '<fg=green>OK';
+                } else{
+                     $this->ret['err'] +=1;
+                     $this->ret['protected_action_path'] = '<fg=red>Must be provided'; 
+                }
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['protected_action_path'] = '<fg=yellow>Must be array'; 
+                $this->ret['protected_action_path'] = '<fg=red>Must be array'; 
             }
 
     }
@@ -154,12 +162,12 @@ class Testing extends Core {
                     $this->ret['protected_middleware_group'] = '<fg=green>OK';
                 } else{
                      $this->ret['err'] +=1;
-                     $this->ret['protected_middleware_group'] = '<fg=yellow>Must be provided'; 
+                     $this->ret['protected_middleware_group'] = '<fg=red>Must be provided'; 
                 }
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['protected_middleware_group'] = '<fg=yellow>Must be array'; 
+                $this->ret['protected_middleware_group'] = '<fg=red>Must be array'; 
             }
 
     }
@@ -169,7 +177,37 @@ class Testing extends Core {
             } else{
 
                 $this->ret['err'] +=1;
-                $this->ret['message_name'] = '<fg=yellow>Must be a String'; 
+                $this->ret['message_name'] = '<fg=red>Must be a String'; 
+            }
+
+    }
+     private function confExceptEnabled(){
+         if(is_bool(config('irfa.lockout.enable_except_account'))){
+                $this->ret['enable_except_account'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['enable_except_account'] = '<fg=red>Must be a String'; 
+            }
+
+    } 
+    private function confExceptAccount(){
+         if(is_array(config('irfa.lockout.except_account'))){
+                if(!empty(config('irfa.lockout.except_account'))){
+                    $this->ret['except_account'] = '<fg=green>OK';
+                } else{
+                    if(config('irfa.lockout.enable_except_account')){
+
+                        $this->ret['except_account'] = '<fg=yellow>NOT SET';
+                    } else{
+
+                        $this->ret['except_account'] = '<fg=green>OK';
+                    }
+                }
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['except_account'] = '<fg=red>Must be a array'; 
             }
 
     }

@@ -116,10 +116,15 @@ class TestingCommands extends Command
                         ['<fg=default>protected_action_path',isset($res['protected_action_path']) ? $res['protected_action_path']:"<fg=red>Not Found"],
                         ['<fg=default>protected_middleware_group',isset($res['protected_middleware_group']) ? $res['protected_middleware_group']:"<fg=red>Not Found"],
                         ['<fg=default>message_name',isset($res['message_name']) ? $res['message_name']:"<fg=red>Not Found"],
+                        ['<fg=default>enable_except_account',isset($res['enable_except_account']) ? $res['enable_except_account']:"<fg=red>Not Found"],
+                        ['<fg=default>except_account',isset($res['except_account']) ? $res['except_account']:"<fg=red>Not Found"],
                        
                     ]);
                         $table->render();
-    	 	
+    	 if($res['err'] > 0){
+            $this->line('<fg=red>Config invalid, testing is canceled.');
+            exit();
+         }	
     	 if($res['err'] > 0 AND !empty($res['file'])){
     	 	$this->line('<fg=red>Testing config failed, testing is canceled.');
     	 	$this->line($res['file']);
