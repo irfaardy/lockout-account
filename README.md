@@ -39,7 +39,7 @@ composer require irfa/lockout
   <h2>3. Publish Vendor</h2>
 
 
-    php artisan vendor:publish --tag=account-lockout
+    php artisan vendor:publish --tag=lockout-account
 
 Open .env file and add this line (optional)
 

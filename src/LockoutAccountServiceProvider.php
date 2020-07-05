@@ -31,23 +31,25 @@ class LockoutAccountServiceProvider extends ServiceProvider
        
         $router = $this->app['router'];
         $this->commands($this->commands);
-        \Illuminate\Support\Facades\Event::listen(
-            \Illuminate\Auth\Events\Failed::class,
-            LockoutAccount::class
-        );
-        \Illuminate\Support\Facades\Event::listen(
-            \Illuminate\Auth\Events\Authenticated::class,
-            CleanLockoutAccount::class
-        );
-            if(in_array('api', config('irfa.lockout.protected_middleware_group'))){
-                $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
-            }
-            if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
-                    $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
-            }
-            if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
-                    $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
-            }
+        if(!empty(config('irfa.lockout'))){
+            \Illuminate\Support\Facades\Event::listen(
+                \Illuminate\Auth\Events\Failed::class,
+                LockoutAccount::class
+            );
+            \Illuminate\Support\Facades\Event::listen(
+                \Illuminate\Auth\Events\Authenticated::class,
+                CleanLockoutAccount::class
+            );
+                if(in_array('api', config('irfa.lockout.protected_middleware_group'))){
+                    $router->pushMiddlewareToGroup('api', \Irfa\Lockout\Middleware\ApiLockAccount::class);
+                }
+                if(in_array('web', config('irfa.lockout.protected_middleware_group'))){
+                        $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+                }
+                if(in_array(null, config('irfa.lockout.protected_middleware_group'))){
+                        $router->pushMiddlewareToGroup('web', \Irfa\Lockout\Middleware\LockAccount::class);
+                }
+        }
 
     }
 
