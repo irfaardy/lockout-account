@@ -7,80 +7,29 @@ use View;
 use File;
 
 class Testing extends Core {
+    private $ret = [];
 
     public function testConfig(){
-        $ret=[];
-        $ret['err'] = 0;
+        $this->ret=[];
+         $this->ret['err'] = 0;
+        
+
         if(!empty(config('irfa.lockout'))){
-            if(is_numeric(config('irfa.lockout.login_attemps'))){
-                $ret['login_attemps'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['login_attemps'] ='<fg=yellow>Must be a number';
-            }
-
-            if(is_bool(config('irfa.lockout.logging'))){
-               $ret['logging'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['logging'] = '<fg=yellow>Must be a Boolean'; 
-            }
-
-            if(is_string(config('irfa.lockout.input_name'))){
-                $ret['input_name'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['input_name'] = '<fg=yellow>Must be a String'; 
-            }
-            if(is_writable(config('irfa.lockout.lockout_file_path'))){
-                $ret['lockout_file_path'] = '<fg=green>OK';
-            } else{
-                $ret['lockout_file_path'] = '<fg=yellow>Write Permission Denied in '.config('irfa.lockout.lockout_file_path'); 
-            }
-
-             if(!empty(config('irfa.lockout.redirect_url'))){
-                $ret['redirect_url'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['redirect_url'] = '<fg=yellow>Must be provided'; 
-            }
-            if(is_array(config('irfa.lockout.protected_action_path'))){
-                $ret['protected_action_path'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['protected_action_path'] = '<fg=yellow>Must be array'; 
-            }
-
-            if(is_array(config('irfa.lockout.protected_middleware_group'))){
-                if(!empty(config('irfa.lockout.protected_middleware_group'))){
-                    $ret['protected_middleware_group'] = '<fg=green>OK';
-                } else{
-                     $ret['err'] +=1;
-                     $ret['protected_middleware_group'] = '<fg=yellow>Must be provided'; 
-                }
-            } else{
-
-                $ret['err'] +=1;
-                $ret['protected_middleware_group'] = '<fg=yellow>Must be array'; 
-            }
-            if(is_string(config('irfa.lockout.message_name'))){
-                $ret['message_name'] = '<fg=green>OK';
-            } else{
-
-                $ret['err'] +=1;
-                $ret['message_name'] = '<fg=yellow>Must be a String'; 
-            }
+            $this->confLoginAttemps();
+            $this->confLogging();
+            $this->confInput();
+            $this->confFilePath();
+            $this->confRedirectUrl();
+            $this->confProtectActionPath();
+            $this->confProtectMiddleware();
+            $this->confMessage();
+  
         } else{
-            $ret['err'] +=1;
-            $ret['file'] = "<fg=yellow> Could't find config file. Try to run <fg=cyan>php artisan vendor:publish --tag=lockout-account"; 
+            $this->ret['err'] +=1;
+            $this->ret['file'] = "<fg=yellow> Could't find config file. Try to run <fg=cyan>php artisan vendor:publish --tag=lockout-account"; 
         }
 
-        return $ret;
+        return $this->ret;
     }
 	public function testWriteEventFailedLogin($username){
 
@@ -119,7 +68,6 @@ class Testing extends Core {
         } 
             return false;
     }
-
     public function testUnlocking($username){
         $input = $username;
         $dir = config('irfa.lockout.lockout_file_path');
@@ -141,5 +89,88 @@ class Testing extends Core {
             return true;
         } 
             return false;
+    }
+//////Config
+    private function confLoginAttemps(){
+            if(is_numeric(config('irfa.lockout.login_attemps'))){
+                $this->ret['login_attemps'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['login_attemps'] ='<fg=yellow>Must be a number';
+            }
+    }
+
+    private function confLogging(){
+       if(is_bool(config('irfa.lockout.logging'))){
+               $this->ret['logging'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['logging'] = '<fg=yellow>Must be a Boolean'; 
+            }
+    }
+    private function confInput(){
+       
+            if(is_string(config('irfa.lockout.input_name'))){
+                $this->ret['input_name'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['input_name'] = '<fg=yellow>Must be a String'; 
+            }
+    }
+     private function confFilePath(){
+       
+            
+            if(is_writable(config('irfa.lockout.lockout_file_path'))){
+                $this->ret['lockout_file_path'] = '<fg=green>OK';
+            } else{
+                $this->ret['lockout_file_path'] = '<fg=yellow>Write Permission Denied in '.config('irfa.lockout.lockout_file_path'); 
+            }
+        }
+    private function confRedirectUrl(){
+        if(!empty(config('irfa.lockout.redirect_url'))){
+                $this->ret['redirect_url'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['redirect_url'] = '<fg=yellow>Must be provided'; 
+            }
+    }
+    private function confProtectActionPath(){
+        if(is_array(config('irfa.lockout.protected_action_path'))){
+                $this->ret['protected_action_path'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['protected_action_path'] = '<fg=yellow>Must be array'; 
+            }
+
+    }
+    private function confProtectMiddleware(){
+        if(is_array(config('irfa.lockout.protected_middleware_group'))){
+                if(!empty(config('irfa.lockout.protected_middleware_group'))){
+                    $this->ret['protected_middleware_group'] = '<fg=green>OK';
+                } else{
+                     $this->ret['err'] +=1;
+                     $this->ret['protected_middleware_group'] = '<fg=yellow>Must be provided'; 
+                }
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['protected_middleware_group'] = '<fg=yellow>Must be array'; 
+            }
+
+    }
+    private function confMessage(){
+         if(is_string(config('irfa.lockout.message_name'))){
+                $this->ret['message_name'] = '<fg=green>OK';
+            } else{
+
+                $this->ret['err'] +=1;
+                $this->ret['message_name'] = '<fg=yellow>Must be a String'; 
+            }
+
     }
 }
