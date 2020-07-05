@@ -28,7 +28,7 @@ class Core extends Variable
      */
     protected function eventFailedLogin($username=null){
         
-        if($username != null){
+        if($username !== null){
           $this->setPath($username);
         }
         if(!File::exists($this->dir)){
@@ -108,7 +108,7 @@ class Core extends Variable
     /**
        * Show message if failed x attemps
        *
-       * @return string
+       * @return mixed
      */
     protected function showMessage(){
         if(Session::has(config('irfa.lockout.message_name'))){
@@ -136,15 +136,16 @@ class Core extends Variable
                 return true;
                 }
                 if($get->attemps > $this->attemps){
-                    if($matchip){
-                    if($this->checkIp($ip_list,$this->ip)){
-                        return true;
-                    } else{
-                        return false;
-                    }
-                    } else{
+                    // if($matchip){
+                    // if($this->checkIp($ip_list,$this->ip)){
+                    //     return true;
+                    // } else{
+                    //     return false;
+                    // }
+                    // } 
+                    // else{
                     return true;
-                    }
+                    // }
                 } else{
                 return false;
                 }
@@ -212,7 +213,7 @@ class Core extends Variable
     /**
      * For Testing
      *
-     * @return boolean or json(if cli)
+     * @return mixed
      */
     public function test_unlock_account($username){
         $this->setPath($username);
@@ -238,7 +239,7 @@ class Core extends Variable
      * Check account with details
      *
      * @param string $username
-     * @return boolean
+     * @return mixed
      */
     public function check_account($username){
       $this->setPath($username);
@@ -265,7 +266,7 @@ class Core extends Variable
      * Locking account manually
      *
      * @param string $username
-     * @return boolean
+     * @return mixed
      */
     public function lock_account($username){
         $sapi = php_sapi_name() == "cli"?"lock-via-cli":"lock-via-web";
@@ -276,7 +277,7 @@ class Core extends Variable
           }
               $login_fail = "lock";
         
-              $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => isset($ip_list)?$ip_list:[$sapi],'last_attemps' => date("Y-m-d H:i:s",time())];
+              $content = ['username' => $this->input,'attemps' => $login_fail,'ip' => [$sapi],'last_attemps' => date("Y-m-d H:i:s",time())];
               File::put($this->path,json_encode($content));
               if(File::exists($this->path)){
                 chmod($this->path,0755);
@@ -287,7 +288,7 @@ class Core extends Variable
               } else{
               return true;
               }
-          } catch(Exception $e){
+          } catch(\Exception $e){
               if(php_sapi_name() == "cli"){
                 return "error";
                 
