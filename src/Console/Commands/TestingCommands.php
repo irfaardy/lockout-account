@@ -121,16 +121,33 @@ class TestingCommands extends Command
                        
                     ]);
                         $table->render();
-    	 if($res['err'] > 0){
-            $this->line('<fg=red>Config invalid, testing is canceled.');
-            exit();
-         }	
-    	 if($res['err'] > 0 AND !empty($res['file'])){
-    	 	$this->line('<fg=red>Testing config failed, testing is canceled.');
-    	 	$this->line($res['file']);
-    	 	exit();
-    	 }
+            $this->errorCheck($res);
 
+    }
+
+    private function errorCheck($res){
+        $this->configExists($res);
+        $this->configCheck($res);
+         
+    }
+
+    private function configCheck($res){
+         if($res['err'] > 0){
+            $this->line('<fg=red>Config invalid, testing is canceled.');
+            $this->line('<fg=default>--------------------------------------------');
+            $this->line('<fg=default>Tested at: '.date('Y-m-d H:m:s',time()));
+            exit();
+         }  
+    }
+
+    private function configExists($res){
+        if($res['err'] > 0 AND !empty($res['file'])){
+            $this->line('<fg=red>Testing config failed, testing is canceled.');
+            $this->line($res['file']);
+            $this->line('<fg=default>--------------------------------------------');
+            $this->line('<fg=default>Tested at: '.date('Y-m-d H:m:s',time()));
+            exit();
+         }
     }
   
    
