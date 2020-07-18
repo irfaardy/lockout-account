@@ -3,6 +3,9 @@
  
 [![Code Climate](https://codeclimate.com/github/irfaardy/lockout-account/badges/gpa.svg)](https://codeclimate.com/github/irfaardy/lockout-account)
  [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/irfaardy/lockout-account/badges/build.png?b=master)](https://scrutinizer-ci.com/g/irfaardy/lockout-account/build-status/master) [![Support me](https://img.shields.io/badge/Support-Buy%20me%20a%20coffee-yellow.svg?style=flat-square)](https://www.buymeacoffee.com/OBaAofN) [![Latest Stable Version](https://flat.badgen.net/packagist/v/irfa/lockout/latest?label=Version)](//packagist.org/packages/irfa/lockout) ![PHP Composer](https://github.com/irfaardy/lockout-account/workflows/PHP%20Composer/badge.svg?branch=master)
+ 
+ 
+<a href="https://www.buymeacoffee.com/OBaAofN" target="_blank"><img width="130px" src="https://cdn.buymeacoffee.com/buttons/lato-red.png" alt="Buy Me A Coffee"  ></a>
 
 This package is useful for locking an account if someone tries to log into your account, this package can be implemented into the admin dashboard login, information system, cloud, etc.
 
