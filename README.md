@@ -51,7 +51,8 @@ LOGIN_ATTEMPS=3
 LOGGING=true
     
 ```
-
+<h2>Usage:</h2>
+<a href="https://github.com/irfaardy/lockout-account/wiki/Usage">https://github.com/irfaardy/lockout-account/wiki/Usage</a>
 
 ------
 
