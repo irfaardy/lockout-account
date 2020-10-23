@@ -24,7 +24,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install laravel
-        run: composer create-project laravel/laravel="7.**" lockout
+        run: composer create-project laravel/laravel="7.*" lockout
       - name: change folder
         run: cd lockout
       - name : install lockout
