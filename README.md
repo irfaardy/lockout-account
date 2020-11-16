@@ -64,7 +64,7 @@ LOGGING=true
 5. Create a new Pull Request
 ---
 ## Issue
-If you found issue please create new issue here https://github.com/irfaardy/lockout-account/issues/new
+If you found issues or bug please create new issues here https://github.com/irfaardy/lockout-account/issues/new
 ***
 
 **LICENSE**<br>
