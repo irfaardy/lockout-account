@@ -62,6 +62,9 @@ LOGGING=true
 3. Commit your changes (`git commit -m 'Add some Feature'`)
 4. Push to the branch (`git push origin version`)
 5. Create a new Pull Request
+---
+## Issue
+If you found issue please create new issue here https://github.com/irfaardy/lockout-account/issues/new
 ***
 
 **LICENSE**<br>
